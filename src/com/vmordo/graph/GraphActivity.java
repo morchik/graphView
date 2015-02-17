@@ -4,8 +4,11 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer.LegendAlign;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,12 +62,17 @@ public class GraphActivity extends ActionBarActivity {
 		private TextView textView;
 		private GraphView graphView;
 
+		DataPoint[] dp = new DataPoint[25];
+
 		public PlaceholderFragment() {
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			for (int i=0; i < dp.length; i++){
+				dp[i] = new DataPoint(i, Math.round(Math.random()*100));
+			}
 			View rootView = inflater.inflate(R.layout.fragment_graph,
 					container, false);
 			textView = (TextView) rootView.findViewById(R.id.textView);
@@ -72,30 +80,30 @@ public class GraphActivity extends ActionBarActivity {
 			seekBar.setOnSeekBarChangeListener(this);
 
 			graphView = new GraphView(Cnt.get());
-			LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
-			          new DataPoint(0, 1),
-			          new DataPoint(1, 5),
-			          new DataPoint(2, 3),
-			          new DataPoint(3, 2),
-			          new DataPoint(4, 6)
-			});
-			graphView.addSeries(series);
 			// legend
-			series.setTitle("foo");
 			graphView.getLegendRenderer().setVisible(true);
 			graphView.getLegendRenderer().setAlign(LegendAlign.TOP);		
 
-			LinearLayout layout = (LinearLayout) rootView
-					.findViewById(R.id.rl_graph);
+			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.rl_graph);
 			layout.addView(graphView);
-
+			seekBar.setMax(dp.length-1);
 			return rootView;
 		}
 
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
-			textView.setText("progress=" + progress);
+			graphView.removeAllSeries();
+			LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(dp);
+			graphView.addSeries(series2);
+			textView.setText("progress=" + progress + "dp="+dp[progress].getX()+","+dp[progress].getY());
+			PointsGraphSeries<DataPoint> series = new PointsGraphSeries<DataPoint>(new DataPoint[]{new DataPoint(dp[progress].getX(), dp[progress].getY())});
+			series.setTitle(""+dp[progress].getY());
+			series.setColor(Color.RED);
+			series.setSize(15f);
+			graphView.addSeries(series);
+
+
 			// Toast.makeText(Cnt.get(), "progress="+progress,
 			// Toast.LENGTH_SHORT).show();
 		}
