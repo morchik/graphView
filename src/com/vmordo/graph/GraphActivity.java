@@ -25,7 +25,7 @@ public class GraphActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Cnt.set(getApplicationContext());
-		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		//getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
 		if (savedInstanceState == null) {
