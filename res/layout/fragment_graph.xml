@@ -13,22 +13,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_below="@+id/textView"
-        android:max="100"
-        android:progress="1" />
-
     <LinearLayout
         android:id="@+id/rl_graph"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView"
-        android:background="@color/ripple_material_light"
+        android:layout_alignParentTop="true"
         android:orientation="horizontal" >
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/ll_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/textView"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/ivA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/txt_pa"
+            android:src="@drawable/p_a" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="1" />
+
     </LinearLayout>
 
 </RelativeLayout>

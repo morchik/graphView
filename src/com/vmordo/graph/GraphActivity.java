@@ -4,7 +4,8 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
-
+import com.jjoe64.graphview.GridLabelRenderer;
+import android.graphics.Paint;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.graphics.Color;
@@ -19,13 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-
 public class GraphActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Cnt.set(getApplicationContext());
-		getWindow().requestFeature(Window.FEATURE_PROGRESS);
+		getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
 		if (savedInstanceState == null) {
@@ -72,26 +72,30 @@ public class GraphActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			
-			for (int i=0; i < dp.length; i++){
-				dp[i] = new DataPoint(i, Math.round(Math.random()*100));
+
+			for (int i = 0; i < dp.length; i++) {
+				dp[i] = new DataPoint(i, Math.round(Math.random() * 160));
 			}
 			View rootView = inflater.inflate(R.layout.fragment_graph,
 					container, false);
 			textView = (TextView) rootView.findViewById(R.id.textView);
-			seekBar = (SeekBar) rootView.findViewById(R.id.seekBar);
-			seekBar.setOnSeekBarChangeListener(this);
-
+			// настраиваем график
 			graphView = new GraphView(Cnt.get());
-			// legend
+			graphView.getGridLabelRenderer().setVerticalAxisTitle("км/ч");
+			graphView.getGridLabelRenderer().setVerticalAxisTitleColor(Color.BLACK);
+			graphView.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
+			graphView.getGridLabelRenderer().setVerticalLabelsColor(Color.RED);
+			graphView.getGridLabelRenderer().setVerticalLabelsAlign(Paint.Align.RIGHT);
+			// добавляем линию графика
 			LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(dp);
 			graphView.addSeries(series2);
-			//graphView.getLegendRenderer().setVisible(true);
-			//graphView.getLegendRenderer().setAlign(LegendAlign.TOP);		
-
+			// вставляем весь график
 			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.rl_graph);
 			layout.addView(graphView);
-			seekBar.setMax(dp.length-1);
+			// ползунок настраиваем !важно делать это после графика!
+			seekBar = (SeekBar) rootView.findViewById(R.id.seekBar);
+			seekBar.setOnSeekBarChangeListener(this);
+			seekBar.setMax(dp.length - 1);
 			return rootView;
 		}
 
@@ -101,7 +105,9 @@ public class GraphActivity extends ActionBarActivity {
 			if (series != null)
 				graphView.removeSeries(series);
 			//textView.setText(""+dp[progress].getY());
-			series = new PointsGraphSeries<DataPoint>(new DataPoint[]{new DataPoint(dp[progress].getX(), dp[progress].getY())});
+			series = new PointsGraphSeries<DataPoint>(
+					new DataPoint[] { new DataPoint(dp[progress].getX(),
+							dp[progress].getY()) });
 			//series.setTitle(""+dp[progress].getY());
 			series.setColor(Color.RED);
 			series.setSize(12f);

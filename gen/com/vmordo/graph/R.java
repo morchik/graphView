@@ -1633,6 +1633,8 @@ containing a value of this type.
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020031;
         public static final int abc_textfield_search_material=0x7f020032;
         public static final int ic_launcher=0x7f020033;
+        public static final int p_a=0x7f020034;
+        public static final int p_b=0x7f020035;
     }
     public static final class id {
         public static final int action_bar=0x7f090031;
@@ -1648,7 +1650,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f09002e;
         public static final int action_mode_bar_stub=0x7f09002d;
         public static final int action_mode_close_button=0x7f090020;
-        public static final int action_settings=0x7f090043;
+        public static final int action_settings=0x7f090045;
         public static final int activity_chooser_view_content=0x7f090021;
         public static final int always=0x7f090014;
         public static final int beginning=0x7f09001b;
@@ -1669,8 +1671,10 @@ containing a value of this type.
         public static final int icon=0x7f090026;
         public static final int ifRoom=0x7f090016;
         public static final int image=0x7f090023;
+        public static final int ivA=0x7f090043;
         public static final int listMode=0x7f09000a;
         public static final int list_item=0x7f090025;
+        public static final int ll_seekbar=0x7f090042;
         public static final int middle=0x7f09001d;
         public static final int never=0x7f090017;
         public static final int none=0x7f09000f;
@@ -1678,7 +1682,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f090007;
         public static final int progress_horizontal=0x7f090008;
         public static final int radio=0x7f09002b;
-        public static final int rl_graph=0x7f090042;
+        public static final int rl_graph=0x7f090041;
         public static final int search_badge=0x7f090035;
         public static final int search_bar=0x7f090034;
         public static final int search_button=0x7f090036;
@@ -1689,7 +1693,7 @@ containing a value of this type.
         public static final int search_plate=0x7f090039;
         public static final int search_src_text=0x7f09003a;
         public static final int search_voice_btn=0x7f09003e;
-        public static final int seekBar=0x7f090041;
+        public static final int seekBar=0x7f090044;
         public static final int shortcut=0x7f09002a;
         public static final int showCustom=0x7f090010;
         public static final int showHome=0x7f090011;
@@ -1819,6 +1823,8 @@ containing a value of this type.
         public static final int abc_toolbar_collapse_description=0x7f0a0004;
         public static final int action_settings=0x7f0a0011;
         public static final int app_name=0x7f0a0010;
+        public static final int txt_pa=0x7f0a0012;
+        public static final int txt_pb=0x7f0a0013;
     }
     public static final class style {
         /** 
