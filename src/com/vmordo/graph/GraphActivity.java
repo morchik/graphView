@@ -1,7 +1,6 @@
 package com.vmordo.graph;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.LegendRenderer.LegendAlign;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
@@ -15,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,6 +25,7 @@ public class GraphActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Cnt.set(getApplicationContext());
+		getWindow().requestFeature(Window.FEATURE_PROGRESS);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
 		if (savedInstanceState == null) {
@@ -61,8 +62,9 @@ public class GraphActivity extends ActionBarActivity {
 		private SeekBar seekBar;
 		private TextView textView;
 		private GraphView graphView;
+		PointsGraphSeries<DataPoint> series;
 
-		DataPoint[] dp = new DataPoint[25];
+		DataPoint[] dp = new DataPoint[9];
 
 		public PlaceholderFragment() {
 		}
@@ -70,6 +72,7 @@ public class GraphActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
 			for (int i=0; i < dp.length; i++){
 				dp[i] = new DataPoint(i, Math.round(Math.random()*100));
 			}
@@ -81,8 +84,10 @@ public class GraphActivity extends ActionBarActivity {
 
 			graphView = new GraphView(Cnt.get());
 			// legend
-			graphView.getLegendRenderer().setVisible(true);
-			graphView.getLegendRenderer().setAlign(LegendAlign.TOP);		
+			LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(dp);
+			graphView.addSeries(series2);
+			//graphView.getLegendRenderer().setVisible(true);
+			//graphView.getLegendRenderer().setAlign(LegendAlign.TOP);		
 
 			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.rl_graph);
 			layout.addView(graphView);
@@ -93,19 +98,14 @@ public class GraphActivity extends ActionBarActivity {
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
-			graphView.removeAllSeries();
-			LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(dp);
-			graphView.addSeries(series2);
-			textView.setText("progress=" + progress + "dp="+dp[progress].getX()+","+dp[progress].getY());
-			PointsGraphSeries<DataPoint> series = new PointsGraphSeries<DataPoint>(new DataPoint[]{new DataPoint(dp[progress].getX(), dp[progress].getY())});
-			series.setTitle(""+dp[progress].getY());
+			if (series != null)
+				graphView.removeSeries(series);
+			//textView.setText(""+dp[progress].getY());
+			series = new PointsGraphSeries<DataPoint>(new DataPoint[]{new DataPoint(dp[progress].getX(), dp[progress].getY())});
+			//series.setTitle(""+dp[progress].getY());
 			series.setColor(Color.RED);
-			series.setSize(15f);
+			series.setSize(12f);
 			graphView.addSeries(series);
-
-
-			// Toast.makeText(Cnt.get(), "progress="+progress,
-			// Toast.LENGTH_SHORT).show();
 		}
 
 		@Override

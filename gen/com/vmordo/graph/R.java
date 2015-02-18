@@ -1689,7 +1689,7 @@ containing a value of this type.
         public static final int search_plate=0x7f090039;
         public static final int search_src_text=0x7f09003a;
         public static final int search_voice_btn=0x7f09003e;
-        public static final int seekBar=0x7f090040;
+        public static final int seekBar=0x7f090041;
         public static final int shortcut=0x7f09002a;
         public static final int showCustom=0x7f090010;
         public static final int showHome=0x7f090011;
@@ -1697,7 +1697,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f090004;
         public static final int submit_area=0x7f09003c;
         public static final int tabMode=0x7f09000c;
-        public static final int textView=0x7f090041;
+        public static final int textView=0x7f090040;
         public static final int title=0x7f090027;
         public static final int up=0x7f090001;
         public static final int useLogo=0x7f090013;
@@ -1817,9 +1817,8 @@ containing a value of this type.
         /**  Content description for the Toolbar icon used to collapse an expanded action mode. [CHAR LIMIT=NONE] 
          */
         public static final int abc_toolbar_collapse_description=0x7f0a0004;
-        public static final int action_settings=0x7f0a0012;
+        public static final int action_settings=0x7f0a0011;
         public static final int app_name=0x7f0a0010;
-        public static final int hello_world=0x7f0a0011;
     }
     public static final class style {
         /** 
