@@ -5,7 +5,11 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 import com.jjoe64.graphview.GridLabelRenderer;
+
+import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.graphics.Color;
@@ -25,7 +29,7 @@ public class GraphActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Cnt.set(getApplicationContext());
-		//getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		// getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
 		if (savedInstanceState == null) {
@@ -56,12 +60,57 @@ public class GraphActivity extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
+	public static class MyGraphView extends GraphView {
+
+		Paint p;
+		Rect rect;
+
+		public MyGraphView(Context context) {
+			super(context);
+			p = new Paint();
+			rect = new Rect();
+		}
+
+		@Override
+		protected void onDraw(Canvas canvas) {
+			super.onDraw(canvas);
+			// заливка канвы цветом
+			canvas.drawARGB(80, 102, 204, 255);
+
+			// настройка кисти
+			// красный цвет
+			p.setColor(Color.RED);
+			// толщина линии = 10
+			p.setStrokeWidth(10);
+
+			// рисуем точку (50,50)
+			canvas.drawPoint(50, 50, p);
+
+			// рисуем линию от (100,100) до (500,50)
+			canvas.drawLine(100, 100, 500, 50, p);
+
+			// рисуем круг с центром в (100,200), радиус = 50
+			canvas.drawCircle(100, 200, 50, p);
+
+			// рисуем пр€моугольник
+			// лева€ верхн€€ точка (200,150), нижн€€ права€ (400,200)
+			canvas.drawRect(200, 150, 400, 200, p);
+
+			// настройка объекта Rect
+			// лева€ верхн€€ точка (250,300), нижн€€ права€ (350,500)
+			rect.set(250, 300, 350, 500);
+			// рисуем пр€моугольник из объекта rect
+			canvas.drawRect(rect, p);
+		}
+
+	}
+
 	public static class PlaceholderFragment extends Fragment implements
 			SeekBar.OnSeekBarChangeListener {
 
 		private SeekBar seekBar;
 		private TextView textView;
-		private GraphView graphView;
+		private MyGraphView graphView;
 		PointsGraphSeries<DataPoint> series;
 
 		DataPoint[] dp = new DataPoint[9];
@@ -80,17 +129,22 @@ public class GraphActivity extends ActionBarActivity {
 					container, false);
 			textView = (TextView) rootView.findViewById(R.id.textView);
 			// настраиваем график
-			graphView = new GraphView(Cnt.get());
+			graphView = new MyGraphView(Cnt.get());
 			graphView.getGridLabelRenderer().setVerticalAxisTitle("км/ч");
-			graphView.getGridLabelRenderer().setVerticalAxisTitleColor(Color.BLACK);
-			graphView.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
+			graphView.getGridLabelRenderer().setVerticalAxisTitleColor(
+					Color.BLACK);
+			graphView.getGridLabelRenderer().setGridStyle(
+					GridLabelRenderer.GridStyle.HORIZONTAL);
 			graphView.getGridLabelRenderer().setVerticalLabelsColor(Color.RED);
-			graphView.getGridLabelRenderer().setVerticalLabelsAlign(Paint.Align.RIGHT);
+			graphView.getGridLabelRenderer().setVerticalLabelsAlign(
+					Paint.Align.RIGHT);
 			// добавл€ем линию графика
-			LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(dp);
+			LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(
+					dp);
 			graphView.addSeries(series2);
 			// вставл€ем весь график
-			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.rl_graph);
+			LinearLayout layout = (LinearLayout) rootView
+					.findViewById(R.id.rl_graph);
 			layout.addView(graphView);
 			// ползунок настраиваем !важно делать это после графика!
 			seekBar = (SeekBar) rootView.findViewById(R.id.seekBar);
@@ -104,11 +158,11 @@ public class GraphActivity extends ActionBarActivity {
 				boolean fromUser) {
 			if (series != null)
 				graphView.removeSeries(series);
-			//textView.setText(""+dp[progress].getY());
+			// textView.setText(""+dp[progress].getY());
 			series = new PointsGraphSeries<DataPoint>(
 					new DataPoint[] { new DataPoint(dp[progress].getX(),
 							dp[progress].getY()) });
-			//series.setTitle(""+dp[progress].getY());
+			// series.setTitle(""+dp[progress].getY());
 			series.setColor(Color.RED);
 			series.setSize(12f);
 			graphView.addSeries(series);
