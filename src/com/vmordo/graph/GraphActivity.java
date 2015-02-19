@@ -74,32 +74,21 @@ public class GraphActivity extends ActionBarActivity {
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
-			// заливка канвы цветом
-			canvas.drawARGB(80, 102, 204, 255);
-
-			// настройка кисти
-			// красный цвет
-			p.setColor(Color.RED);
-			// толщина линии = 10
-			p.setStrokeWidth(10);
-
-			// рисуем точку (50,50)
-			canvas.drawPoint(50, 50, p);
-
 			// рисуем линию от (100,100) до (500,50)
-			canvas.drawLine(100, 100, 500, 50, p);
+			int x = (super.getGraphContentLeft() + super.getGraphContentWidth()) / 2;
 
+			canvas.drawLine(x, super.getGraphContentTop(), x,
+					super.getGraphContentTop() + super.getGraphContentHeight(),
+					p);
+			rect.left = super.getGraphContentLeft();
 			// рисуем круг с центром в (100,200), радиус = 50
-			canvas.drawCircle(100, 200, 50, p);
+			canvas.drawCircle(10, 200, 10, p);
 
-			// рисуем пр€моугольник
-			// лева€ верхн€€ точка (200,150), нижн€€ права€ (400,200)
-			canvas.drawRect(200, 150, 400, 200, p);
-
-			// настройка объекта Rect
-			// лева€ верхн€€ точка (250,300), нижн€€ права€ (350,500)
-			rect.set(250, 300, 350, 500);
-			// рисуем пр€моугольник из объекта rect
+			rect.left = super.getGraphContentLeft();
+			rect.top = super.getGraphContentTop();
+			rect.right = super.getGraphContentLeft()
+					+ super.getGraphContentWidth();
+			rect.bottom = super.getGraphContentTop() + 5;// super.getGraphContentHeight();
 			canvas.drawRect(rect, p);
 		}
 
