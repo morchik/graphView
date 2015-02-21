@@ -1,28 +1,21 @@
 package com.vmordo.graph;
 
-import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.PointsGraphSeries;
-import com.jjoe64.graphview.GridLabelRenderer;
-
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
+import com.jjoe64.graphview.series.Series;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 public class GraphActivity extends ActionBarActivity {
 
@@ -60,46 +53,9 @@ public class GraphActivity extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class MyGraphView extends GraphView {
-
-		Paint p;
-		Rect rect;
-
-		public MyGraphView(Context context) {
-			super(context);
-			p = new Paint();
-			rect = new Rect();
-		}
-
-		@Override
-		protected void onDraw(Canvas canvas) {
-			super.onDraw(canvas);
-			// рисуем линию от (100,100) до (500,50)
-			int x = (super.getGraphContentLeft() + super.getGraphContentWidth()) / 2;
-
-			canvas.drawLine(x, super.getGraphContentTop(), x,
-					super.getGraphContentTop() + super.getGraphContentHeight(),
-					p);
-			rect.left = super.getGraphContentLeft();
-			// рисуем круг с центром в (100,200), радиус = 50
-			canvas.drawCircle(10, 200, 10, p);
-
-			rect.left = super.getGraphContentLeft();
-			rect.top = super.getGraphContentTop();
-			rect.right = super.getGraphContentLeft()
-					+ super.getGraphContentWidth();
-			rect.bottom = super.getGraphContentTop() + 5;// super.getGraphContentHeight();
-			canvas.drawRect(rect, p);
-		}
-
-	}
-
-	public static class PlaceholderFragment extends Fragment implements
-			SeekBar.OnSeekBarChangeListener {
-
-		private SeekBar seekBar;
-		private TextView textView;
-		private MyGraphView graphView;
+	
+	public static class PlaceholderFragment extends Fragment{
+		private SbGraphView graphView;
 		PointsGraphSeries<DataPoint> series;
 
 		DataPoint[] dp = new DataPoint[9];
@@ -116,57 +72,25 @@ public class GraphActivity extends ActionBarActivity {
 			}
 			View rootView = inflater.inflate(R.layout.fragment_graph,
 					container, false);
-			textView = (TextView) rootView.findViewById(R.id.textView);
-			// настраиваем график
-			graphView = new MyGraphView(Cnt.get());
-			graphView.getGridLabelRenderer().setVerticalAxisTitle("км/ч");
-			graphView.getGridLabelRenderer().setVerticalAxisTitleColor(
-					Color.BLACK);
-			graphView.getGridLabelRenderer().setGridStyle(
-					GridLabelRenderer.GridStyle.HORIZONTAL);
-			graphView.getGridLabelRenderer().setVerticalLabelsColor(Color.RED);
-			graphView.getGridLabelRenderer().setVerticalLabelsAlign(
-					Paint.Align.RIGHT);
+			graphView = new SbGraphView(Cnt.get());
 			// добавляем линию графика
 			LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(
 					dp);
+			series2.setOnDataPointTapListener(new OnDataPointTapListener() {
+
+				@Override
+				public void onTap(Series series, DataPointInterface dataPoint) {
+					int diffX = graphView.getGraphContentWidth() / (dp.length-1);
+					graphView.lineX = (int) Math.round(dataPoint.getX()*diffX);
+					graphView.invalidate();
+				}
+			});
 			graphView.addSeries(series2);
 			// вставляем весь график
 			LinearLayout layout = (LinearLayout) rootView
 					.findViewById(R.id.rl_graph);
 			layout.addView(graphView);
-			// ползунок настраиваем !важно делать это после графика!
-			seekBar = (SeekBar) rootView.findViewById(R.id.seekBar);
-			seekBar.setOnSeekBarChangeListener(this);
-			seekBar.setMax(dp.length - 1);
 			return rootView;
-		}
-
-		@Override
-		public void onProgressChanged(SeekBar seekBar, int progress,
-				boolean fromUser) {
-			if (series != null)
-				graphView.removeSeries(series);
-			// textView.setText(""+dp[progress].getY());
-			series = new PointsGraphSeries<DataPoint>(
-					new DataPoint[] { new DataPoint(dp[progress].getX(),
-							dp[progress].getY()) });
-			// series.setTitle(""+dp[progress].getY());
-			series.setColor(Color.RED);
-			series.setSize(12f);
-			graphView.addSeries(series);
-		}
-
-		@Override
-		public void onStartTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
-
 		}
 	}
 }
