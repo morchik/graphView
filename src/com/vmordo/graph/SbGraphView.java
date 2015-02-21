@@ -8,6 +8,11 @@ import android.graphics.Rect;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
 public class SbGraphView extends GraphView {
 
@@ -28,6 +33,21 @@ public class SbGraphView extends GraphView {
 		this.getGridLabelRenderer().setVerticalLabelsAlign(Paint.Align.RIGHT);
 	}
 
+	public void add(final DataPoint[] dp) {
+		// добавляем линию графика
+		LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(dp);
+		series2.setOnDataPointTapListener(new OnDataPointTapListener() {
+
+			@Override
+			public void onTap(Series series, DataPointInterface dataPoint) {
+				int diffX = getGraphContentWidth() / (dp.length - 1);
+				lineX = (int) Math.round(dataPoint.getX() * diffX);
+				invalidate();
+			}
+		});
+		addSeries(series2);
+	}
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -38,7 +58,6 @@ public class SbGraphView extends GraphView {
 		rect.left = super.getGraphContentLeft();
 		// findDataPoint(x, y);
 		canvas.drawCircle(x, super.getGraphContentTop(), 10, p);
-
 		rect.left = super.getGraphContentLeft();
 		rect.top = super.getGraphContentTop();
 		rect.right = super.getGraphContentLeft() + super.getGraphContentWidth();

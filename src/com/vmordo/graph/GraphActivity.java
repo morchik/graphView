@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 
 public class GraphActivity extends ActionBarActivity {
 
@@ -73,19 +72,7 @@ public class GraphActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_graph,
 					container, false);
 			graphView = new SbGraphView(Cnt.get());
-			// добавляем линию графика
-			LineGraphSeries<DataPoint> series2 = new LineGraphSeries<DataPoint>(
-					dp);
-			series2.setOnDataPointTapListener(new OnDataPointTapListener() {
-
-				@Override
-				public void onTap(Series series, DataPointInterface dataPoint) {
-					int diffX = graphView.getGraphContentWidth() / (dp.length-1);
-					graphView.lineX = (int) Math.round(dataPoint.getX()*diffX);
-					graphView.invalidate();
-				}
-			});
-			graphView.addSeries(series2);
+			graphView.add(dp);
 			// вставляем весь график
 			LinearLayout layout = (LinearLayout) rootView
 					.findViewById(R.id.rl_graph);
