@@ -18,7 +18,7 @@ public class SbGraphView extends GraphView {
 
 	Paint p;
 	Rect rect;
-	public int lineX = 0;
+	public int lineX = 0, lineY = 0;
 
 	public SbGraphView(Context context) {
 		super(context);
@@ -41,7 +41,9 @@ public class SbGraphView extends GraphView {
 			@Override
 			public void onTap(Series series, DataPointInterface dataPoint) {
 				int diffX = getGraphContentWidth() / (dp.length - 1);
+				int diffY = (int) (getGraphContentHeight() / (series.getHighestValueY()));
 				lineX = (int) Math.round(dataPoint.getX() * diffX);
+				lineY = (int) Math.round(dataPoint.getY() * diffY);
 				invalidate();
 			}
 		});
@@ -53,8 +55,8 @@ public class SbGraphView extends GraphView {
 		super.onDraw(canvas);
 		// рисуем линию от (100,100) до (500,50)
 		int x = lineX + super.getGraphContentLeft();
-		canvas.drawLine(x, super.getGraphContentTop(), x,
-				super.getGraphContentTop() + super.getGraphContentHeight(), p);
+		int y = super.getGraphContentTop() + super.getGraphContentHeight() - lineY;
+		canvas.drawLine(x, super.getGraphContentTop(), x, y, p);
 		rect.left = super.getGraphContentLeft();
 		// findDataPoint(x, y);
 		canvas.drawCircle(x, super.getGraphContentTop(), 10, p);
