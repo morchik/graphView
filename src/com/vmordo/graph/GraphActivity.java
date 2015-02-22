@@ -1,7 +1,6 @@
 package com.vmordo.graph;
 
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.PointsGraphSeries;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -16,8 +15,7 @@ public class GraphActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Cnt.set(getApplicationContext());
-		// getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		Cnt.set(getApplicationContext()); // для удобства работы потом Cnt.get()
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
 		if (savedInstanceState == null) {
@@ -51,9 +49,6 @@ public class GraphActivity extends ActionBarActivity {
 	
 	public static class PlaceholderFragment extends Fragment{
 		private SbGraphView graphView;
-		PointsGraphSeries<DataPoint> series;
-
-		DataPoint[] dp = new DataPoint[19];
 
 		public PlaceholderFragment() {
 		}
@@ -61,17 +56,16 @@ public class GraphActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-
+			// случайными значениями заполняем
+			DataPoint[] dp = new DataPoint[19];
 			for (int i = 0; i < dp.length; i++) {
 				dp[i] = new DataPoint(i+1, Math.round(Math.random() * 160));
 			}
-			View rootView = inflater.inflate(R.layout.fragment_graph,
-					container, false);
-			graphView = new SbGraphView(Cnt.get());
-			graphView.add(dp);
-			// вставляем весь график
-			LinearLayout layout = (LinearLayout) rootView
-					.findViewById(R.id.rl_graph);
+			View rootView = inflater.inflate(R.layout.fragment_graph,container, false);
+			graphView = new SbGraphView(Cnt.get()); // для удобства работы Cnt.get()
+			graphView.add(dp); // добавляем точки графика
+			// вставляем весь график в спец. место во фрейме
+			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.rl_graph);
 			layout.addView(graphView);
 			return rootView;
 		}

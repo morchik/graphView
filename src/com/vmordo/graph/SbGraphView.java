@@ -1,28 +1,24 @@
 package com.vmordo.graph;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
 import android.view.MotionEvent;
-
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.series.OnDataPointTapListener;
-import com.jjoe64.graphview.series.Series;
 
 public class SbGraphView extends GraphView {
 	DataPoint[] mDPs;
 	Paint p, pr;
 	Rect rect;
 	RectF rectf;
-	public int lineX = 0, lineY = 0;
 	DataPointInterface dtp;
 	LineGraphSeries<DataPoint> series2;
 
@@ -45,8 +41,9 @@ public class SbGraphView extends GraphView {
 	}
 
 	public void add(final DataPoint[] dp) {
-		mDPs = dp;
+		mDPs = dp; // сохраняем данные они потом потребуются
 		// добавляем линию графика
+		dtp = mDPs[0];
 		series2 = new LineGraphSeries<DataPoint>(dp);
 		addSeries(series2);
 	}
@@ -55,10 +52,10 @@ public class SbGraphView extends GraphView {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		if (dtp != null) {
-			getViewXY(dtp);
+			DataPoint dp = getViewXY(dtp);
 			// рисуем линию и точку
-			int x = lineX + getGraphContentLeft() + 1;
-			int y = getGraphContentTop() + getGraphContentHeight() - lineY;
+			int x = (int) (dp.getX()) + getGraphContentLeft() + 1;
+			int y = getGraphContentTop() + getGraphContentHeight() - (int) dp.getY();
 			canvas.drawLine(x, getGraphContentTop(), x, getGraphContentTop()
 					+ getGraphContentHeight(), p);
 			canvas.drawCircle(x, y, 3, p);
@@ -73,7 +70,7 @@ public class SbGraphView extends GraphView {
 			rectf.bottom = y - 9;
 			canvas.drawRoundRect(rectf, 5f, 5f, pr);
 			canvas.drawText(text, x, y - 10, p);
-
+			// имитация прорисовки seekBar
 			canvas.drawCircle(x, getGraphContentTop(), 7, p);
 			rect.left = getGraphContentLeft();
 			rect.top = getGraphContentTop();
@@ -84,14 +81,13 @@ public class SbGraphView extends GraphView {
 	}
 
 	// вычисляем координаты lineX, lineY (взято из jjoe64)
-	public void getViewXY(DataPointInterface dataPoint) {
+	public DataPoint getViewXY(DataPointInterface dataPoint) {
 		double minX = getViewport().getMinX(false);
 		double maxX = getViewport().getMaxX(false);
 		double diffX = maxX - minX;
 		double valX = dataPoint.getX() - minX;
 		double ratX = valX / diffX;
 		double x = getGraphContentWidth() * ratX;
-		lineX = (int) Math.round(x);
 
 		double maxY = getViewport().getMaxY(false);
 		double minY = getViewport().getMinY(false);
@@ -99,16 +95,14 @@ public class SbGraphView extends GraphView {
 		double valY = dataPoint.getY() - minY;
 		double ratY = valY / diffY;
 		double y = getGraphContentHeight() * ratY;
-		lineY = (int) Math.round(y);
+
+		return new DataPoint(x, y);
 	}
 
-	@Override
+	@SuppressLint("ClickableViewAccessibility") @Override
 	public boolean onTouchEvent(MotionEvent event) {
-		Log.d("SbGraphView","tap detected x=" + event.getX());
 		double maxX = getViewport().getMaxX(false);
-		Log.v("SbGraphView","maxY=" + maxX);
 		double minX = getViewport().getMinX(false);
-		Log.v("SbGraphView","minY=" + minX);
 
 		if (event.getX() >= (getGraphContentWidth()+getGraphContentLeft()))
 			dtp = mDPs[mDPs.length-1];
@@ -116,7 +110,6 @@ public class SbGraphView extends GraphView {
 			dtp = mDPs[0];
 		else{
 			double valX = (maxX- minX)*(event.getX() - getGraphContentLeft())/getGraphContentWidth();
-			Log.v("SbGraphView","valY=" + valX);
 			int ind = (int) Math.round(valX);
 			if (ind > mDPs.length-1 )
 				ind = mDPs.length-1;
