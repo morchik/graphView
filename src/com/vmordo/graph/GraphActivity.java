@@ -53,7 +53,7 @@ public class GraphActivity extends ActionBarActivity {
 		private SbGraphView graphView;
 		PointsGraphSeries<DataPoint> series;
 
-		DataPoint[] dp = new DataPoint[9];
+		DataPoint[] dp = new DataPoint[19];
 
 		public PlaceholderFragment() {
 		}
@@ -63,7 +63,7 @@ public class GraphActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 
 			for (int i = 0; i < dp.length; i++) {
-				dp[i] = new DataPoint(i, Math.round(Math.random() * 160));
+				dp[i] = new DataPoint(i+1, Math.round(Math.random() * 160));
 			}
 			View rootView = inflater.inflate(R.layout.fragment_graph,
 					container, false);

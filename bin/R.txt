@@ -124,10 +124,6 @@ int attr searchIcon 0x7f01007e
 int attr searchViewStyle 0x7f01003f
 int attr selectableItemBackground 0x7f010030
 int attr selectableItemBackgroundBorderless 0x7f010031
-int attr seriesColor 0x7f0100ac
-int attr seriesData 0x7f0100a9
-int attr seriesTitle 0x7f0100ab
-int attr seriesType 0x7f0100aa
 int attr showAsAction 0x7f010071
 int attr showDividers 0x7f010088
 int attr showText 0x7f0100a8
@@ -746,12 +742,6 @@ int styleable DrawerArrowToggle_middleBarArrowSize 5
 int styleable DrawerArrowToggle_spinBars 1
 int styleable DrawerArrowToggle_thickness 7
 int styleable DrawerArrowToggle_topBottomBarArrowSize 4
-int[] styleable GraphViewXML { 0x010101e1, 0x7f0100a9, 0x7f0100aa, 0x7f0100ab, 0x7f0100ac }
-int styleable GraphViewXML_android_title 0
-int styleable GraphViewXML_seriesColor 4
-int styleable GraphViewXML_seriesData 1
-int styleable GraphViewXML_seriesTitle 3
-int styleable GraphViewXML_seriesType 2
 int[] styleable LinearLayoutCompat { 0x010100af, 0x010100c4, 0x01010126, 0x01010127, 0x01010128, 0x7f01005c, 0x7f010087, 0x7f010088, 0x7f010089 }
 int styleable LinearLayoutCompat_android_baselineAligned 2
 int styleable LinearLayoutCompat_android_baselineAlignedChildIndex 3

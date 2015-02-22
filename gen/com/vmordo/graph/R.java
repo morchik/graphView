@@ -932,39 +932,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static final int selectableItemBackgroundBorderless=0x7f010031;
-        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int seriesColor=0x7f0100ac;
-        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int seriesData=0x7f0100a9;
-        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int seriesTitle=0x7f0100ab;
-        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int seriesType=0x7f0100aa;
         /**  How this item should display in the Action Bar, if present. 
          <p>Must be one or more (separated by '|') of the following constant values.</p>
 <table>
@@ -3084,91 +3051,6 @@ containing a value of this type.
           @attr name com.vmordo.graph:topBottomBarArrowSize
         */
         public static final int DrawerArrowToggle_topBottomBarArrowSize = 4;
-        /** Attributes that can be used with a GraphViewXML.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #GraphViewXML_android_title android:title}</code></td><td></td></tr>
-           <tr><td><code>{@link #GraphViewXML_seriesColor com.vmordo.graph:seriesColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #GraphViewXML_seriesData com.vmordo.graph:seriesData}</code></td><td></td></tr>
-           <tr><td><code>{@link #GraphViewXML_seriesTitle com.vmordo.graph:seriesTitle}</code></td><td></td></tr>
-           <tr><td><code>{@link #GraphViewXML_seriesType com.vmordo.graph:seriesType}</code></td><td></td></tr>
-           </table>
-           @see #GraphViewXML_android_title
-           @see #GraphViewXML_seriesColor
-           @see #GraphViewXML_seriesData
-           @see #GraphViewXML_seriesTitle
-           @see #GraphViewXML_seriesType
-         */
-        public static final int[] GraphViewXML = {
-            0x010101e1, 0x7f0100a9, 0x7f0100aa, 0x7f0100ab,
-            0x7f0100ac
-        };
-        /**
-          <p>This symbol is the offset where the {@link android.R.attr#title}
-          attribute's value can be found in the {@link #GraphViewXML} array.
-          @attr name android:title
-        */
-        public static final int GraphViewXML_android_title = 0;
-        /**
-          <p>This symbol is the offset where the {@link com.vmordo.graph.R.attr#seriesColor}
-          attribute's value can be found in the {@link #GraphViewXML} array.
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.vmordo.graph:seriesColor
-        */
-        public static final int GraphViewXML_seriesColor = 4;
-        /**
-          <p>This symbol is the offset where the {@link com.vmordo.graph.R.attr#seriesData}
-          attribute's value can be found in the {@link #GraphViewXML} array.
-
-
-          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.vmordo.graph:seriesData
-        */
-        public static final int GraphViewXML_seriesData = 1;
-        /**
-          <p>This symbol is the offset where the {@link com.vmordo.graph.R.attr#seriesTitle}
-          attribute's value can be found in the {@link #GraphViewXML} array.
-
-
-          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.vmordo.graph:seriesTitle
-        */
-        public static final int GraphViewXML_seriesTitle = 3;
-        /**
-          <p>This symbol is the offset where the {@link com.vmordo.graph.R.attr#seriesType}
-          attribute's value can be found in the {@link #GraphViewXML} array.
-
-
-          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.vmordo.graph:seriesType
-        */
-        public static final int GraphViewXML_seriesType = 2;
         /** Attributes that can be used with a LinearLayoutCompat.
            <p>Includes the following attributes:</p>
            <table>
