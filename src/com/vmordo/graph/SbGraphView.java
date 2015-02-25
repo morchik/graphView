@@ -46,6 +46,7 @@ public class SbGraphView extends GraphView {
 		dtp = mDPs[0];
 		series2 = new LineGraphSeries<DataPoint>(dp);
 		addSeries(series2);
+		invalidate();
 	}
 
 	@Override
@@ -116,7 +117,7 @@ public class SbGraphView extends GraphView {
 			dtp = mDPs[ind];
 		}
 		invalidate();
-		return true;
+		return super.onTouchEvent(event);
 	}
 
 }
